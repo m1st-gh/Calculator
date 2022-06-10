@@ -2,14 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Stack;
+import java.util.ArrayList;
 
-public class Calculator extends JFrame{
-    double in, cur = 0;
+public class Calculator extends JFrame {
 
     public Calculator() {
 
-        Stack<Character> expStack = new Stack<>();
+        ArrayList<String> exp = new ArrayList<>();
 
         //panel and frame
         JFrame frame = new JFrame("Calculator");
@@ -31,65 +30,243 @@ public class Calculator extends JFrame{
         JButton div = new JButton("/");
         JButton mul = new JButton("x");
         JButton solve = new JButton("Solve");
+        JButton clr = new JButton("C");
 
+        clr.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exp.clear();
+                input.setText("");
+            }
+        });
         zero.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('0');
+                exp.add("0");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                    System.out.println(exps);
+                }
+                input.setText(exps);
+
             }
         });
         one.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('1');
+                exp.add("1");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
             }
         });
         two.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('2');
+                exp.add("2");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
             }
         });
         three.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('3');
+                exp.add("3");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
             }
         });
         four.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('4');
+                exp.add("4");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
             }
         });
         five.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('5');
+                exp.add("5");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
             }
         });
         six.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('6');
+                exp.add("6");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+
+                input.setText(exps);
+
             }
         });
         seven.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('7');
+                exp.add("7");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
             }
         });
         eight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('8');
+                exp.add("8");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
             }
         });
         nine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                expStack.push('9');
+                exp.add("9");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
+            }
+        });
+
+        add.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exp.add("+");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
+            }
+        });
+
+        sub.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exp.add("-");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
+            }
+        });
+
+        div.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exp.add("/");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
+            }
+        });
+
+
+        mul.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exp.add("*");
+                String exps = "";
+                for (int i = 0; i < exp.size(); i++) {
+                    exps += exp.get(i);
+                }
+                input.setText(exps);
+
+
+            }
+        });
+        solve.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int i = 0;
+
+                for (i = 0; i < exp.size(); i++) {
+                    if (exp.get(i).equals("+") || exp.get(i).equals("-") || exp.get(i).equals("*") || exp.get(i).equals("/")) {
+                        break;
+                    }
+                }
+                String numString1 = "";
+                String numString2 = "";
+
+                for (int j = 0; j < i; j++) {
+                    numString1 = numString1 + exp.get(j);
+
+                }
+                for (int j = i + 1; j < exp.size(); j++) {
+                    numString2 = numString2 + exp.get(j);
+
+                }
+
+
+                double num1 = Double.parseDouble(numString1);
+                double num2 = Double.parseDouble(numString2);
+                double valueOf = 0;
+                boolean isValid = true;
+
+
+                switch (exp.get(i)) {
+                    case "+":
+                        valueOf = num1 + num2;
+                        break;
+                    case "-":
+                        valueOf = num1 - num2;
+                    case "*":
+                        valueOf = num1 * num2;
+                    case "/":
+                        if (num2 > 0) {
+                            valueOf = num1 / num2;
+                        } else {
+                            isValid = false;
+                        }
+                        break;
+                }
+
+                if (isValid) {
+                    input.setText(String.valueOf(valueOf));
+                } else {
+                    input.setText("Error");
+                }
             }
         });
 
@@ -181,6 +358,11 @@ public class Calculator extends JFrame{
         gbc.gridx = 3;
 
         panel.add(div, gbc);
+
+        gbc.gridy = 4;
+        gbc.gridx = 0;
+
+        panel.add(clr, gbc);
 
         gbc.gridy = 5;
         gbc.gridx = 0;
