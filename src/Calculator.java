@@ -4,14 +4,12 @@ import java.util.ArrayList;
 
 public class Calculator extends JFrame {
 
-    public Calculator() {
+    public Calculator() throws UnsupportedLookAndFeelException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         ArrayList<String> exp = new ArrayList<>();
-        //panel and frame
         JFrame frame = new JFrame("Calculator");
         JPanel panel = new JPanel();
         JTextField input = new JTextField();
-        //buttons
         JButton zero = new JButton("0");
         JButton one = new JButton("1");
         JButton two = new JButton("2");
@@ -28,6 +26,7 @@ public class Calculator extends JFrame {
         JButton mul = new JButton("x");
         JButton solve = new JButton("Solve");
         JButton clr = new JButton("C");
+        JButton dec = new JButton(".");
 
         clr.addActionListener(e -> {
             exp.clear();
@@ -153,37 +152,50 @@ public class Calculator extends JFrame {
                 exps.append(s);
             }
             input.setText(exps.toString());
-
-
         });
-        solve.addActionListener(e -> {
-            int i;
-
-            for (i = 0; i < exp.size(); i++) {
-                if (exp.get(i).equals("+") || exp.get(i).equals("-") || exp.get(i).equals("*") || exp.get(i).equals("/")) {
-                    break;
-                }
+        dec.addActionListener(e -> {
+            exp.add(".");
+            StringBuilder exps = new StringBuilder();
+            for (String s : exp) {
+                exps.append(s);
             }
+            input.setText(exps.toString());
+        });
+
+
+        solve.addActionListener(e -> {
+            int f = 0, g = 0;
+
+
+            for (int i = 0; i < exp.size(); i++) {
+                if (exp.get(i).equals("+") || exp.get(i).equals("-") || exp.get(i).equals("*") || exp.get(i).equals("/")) {
+                    f++;
+                    g = i;
+
+                }
+                if(f > 1){
+                    input.setText("Error");
+                    return;
+                }
+
+            }
+
             StringBuilder numString1 = new StringBuilder();
             StringBuilder numString2 = new StringBuilder();
 
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < g; j++) {
                 numString1.append(exp.get(j));
-
             }
-            for (int j = i + 1; j < exp.size(); j++) {
+            for (int j = g + 1; j < exp.size(); j++) {
                 numString2.append(exp.get(j));
-
             }
-
 
             double num1 = Double.parseDouble(numString1.toString());
             double num2 = Double.parseDouble(numString2.toString());
             double valueOf = 0;
             boolean isValid = true;
 
-
-            switch (exp.get(i)) {
+            switch (exp.get(g)) {
                 case "+":
                     valueOf = num1 + num2;
                     break;
@@ -204,30 +216,26 @@ public class Calculator extends JFrame {
 
             if (isValid) {
                 input.setText(String.valueOf(valueOf));
+                exp.clear();
             } else {
                 input.setText("Error");
             }
+
         });
-
-
         //Input
-
-
         panel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-
         //Input position
         gbc.gridy = 0;
         gbc.gridx = 0;
         gbc.gridwidth = 4;
         gbc.fill = GridBagConstraints.BOTH;
-
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
 
         panel.add(input, gbc);
-        gbc.gridwidth = 1;
 
+        gbc.gridwidth = 1;
         gbc.gridy = 1;
         gbc.gridx = 0;
 
@@ -303,18 +311,24 @@ public class Calculator extends JFrame {
 
         panel.add(clr, gbc);
 
+        gbc.gridy = 4;
+        gbc.gridx = 2;
+
+        panel.add(dec, gbc);
+
         gbc.gridy = 5;
         gbc.gridx = 0;
-
         gbc.gridwidth = 4;
 
         panel.add(solve, gbc);
 
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
         frame.setSize(250, 400);
+        input.setFont(new Font("Basic", Font.BOLD, 44));
+        input.setEditable(false);
         frame.add(panel);
         frame.setVisible(true);
-
 
     }
 
